@@ -98,9 +98,4 @@ export OLLAMA_MODEL=llama3.2
 
 Flux : `command_listener` → `llm_bridge` → `task_planner` → Nav2 / perception / mémoire → `mission_report`.
 
-## Pièges fréquents
 
-1. Aligner les QoS caméra (`best_effort`) entre Gazebo et les subscribers.
-2. Ne pas mélanger Gazebo installé manuellement avec `ros-humble-ros-gz`.
-3. Installer `ultralytics` dans le même Python que `rclpy` (pas de venv isolé).
-4. Ajuster `inflation_radius` dans Nav2 si le robot bloque dans les couloirs.
