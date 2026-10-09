@@ -1,0 +1,4 @@
+string room_name
+---
+geometry_msgs/PoseStamped pose
+bool found

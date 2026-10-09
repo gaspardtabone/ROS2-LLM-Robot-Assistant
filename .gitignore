@@ -1,0 +1,38 @@
+# colcon / ament
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+
+# ROS bags and heavy artifacts
+*.bag
+*.db3
+*.mcap
+*.pt
+*.onnx
+maps/*.pgm
+maps/*.yaml
+!maps/.gitkeep
+!maps/README.md
+
+# Mission artifacts
+artifacts/
+*.sqlite
+*.sqlite3
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*

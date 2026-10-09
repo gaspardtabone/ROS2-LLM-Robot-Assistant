@@ -1,0 +1,5 @@
+string label
+string room
+geometry_msgs/Pose pose
+---
+bool success

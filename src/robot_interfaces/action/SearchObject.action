@@ -1,0 +1,10 @@
+# Goal
+string label
+---
+# Result
+bool found
+geometry_msgs/Pose pose
+---
+# Feedback
+int32 frames_scanned
+float32 max_confidence

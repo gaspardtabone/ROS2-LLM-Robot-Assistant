@@ -1,0 +1,11 @@
+# Goal
+bool enable
+---
+# Result
+bool success
+string message
+---
+# Feedback
+float32 distance_to_target
+float32 linear_velocity
+float32 angular_velocity

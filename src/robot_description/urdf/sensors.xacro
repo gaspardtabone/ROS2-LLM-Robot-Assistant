@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- LiDAR Sensor Macro -->
+  <xacro:macro name="lidar" params="parent">
+    <joint name="laser_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="base_laser_link"/>
+      <origin xyz="0.05 0 0.12" rpy="0 0 0"/>
+    </joint>
+
+    <link name="base_laser_link">
+      <visual>
+        <geometry>
+          <cylinder radius="0.04" length="0.04"/>
+        </geometry>
+        <material name="black">
+          <color rgba="0.1 0.1 0.1 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder radius="0.04" length="0.04"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.12"/>
+        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+      </inertial>
+    </link>
+
+    <gazebo reference="base_laser_link">
+      <sensor name="gpu_lidar" type="gpu_lidar">
+        <update_rate>10.0</update_rate>
+        <topic>scan</topic>
+        <gz_frame_id>base_laser_link</gz_frame_id>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1.0</resolution>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.15</min>
+            <max>12.0</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+        </ray>
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Camera Sensor Macro -->
+  <xacro:macro name="camera" params="parent">
+    <joint name="camera_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="camera_link"/>
+      <origin xyz="0.14 0 0.08" rpy="0 0 0"/>
+    </joint>
+
+    <link name="camera_link">
+      <visual>
+        <geometry>
+          <box size="0.02 0.08 0.02"/>
+        </geometry>
+        <material name="dark_grey">
+          <color rgba="0.2 0.2 0.2 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.02 0.08 0.02"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.05"/>
+        <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
+      </inertial>
+    </link>
+
+    <!-- Camera optical frame for OpenCV / ROS convention -->
+    <joint name="camera_optical_joint" type="fixed">
+      <parent link="camera_link"/>
+      <child link="camera_link_optical"/>
+      <origin xyz="0 0 0" rpy="-1.5707963 0 -1.5707963"/>
+    </joint>
+    <link name="camera_link_optical"/>
+
+    <gazebo reference="camera_link">
+      <sensor name="camera" type="camera">
+        <update_rate>30.0</update_rate>
+        <topic>camera/image_raw</topic>
+        <gz_frame_id>camera_link_optical</gz_frame_id>
+        <camera name="front_camera">
+          <horizontal_fov>1.089</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.05</near>
+            <far>10.0</far>
+          </clip>
+        </camera>
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- IMU Sensor Macro -->
+  <xacro:macro name="imu" params="parent">
+    <joint name="imu_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="imu_link"/>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    </joint>
+
+    <link name="imu_link">
+      <inertial>
+        <mass value="0.01"/>
+        <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+      </inertial>
+    </link>
+
+    <gazebo reference="imu_link">
+      <sensor name="imu" type="imu">
+        <update_rate>100.0</update_rate>
+        <topic>imu/data</topic>
+        <gz_frame_id>imu_link</gz_frame_id>
+        <always_on>true</always_on>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

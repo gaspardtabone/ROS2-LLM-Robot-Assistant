@@ -1,0 +1,5 @@
+yolo_detector_node:
+  ros__parameters:
+    model_path: "yolo11n.pt"
+    confidence_threshold: 0.5
+    image_topic: "/camera/image_raw"
